@@ -1,0 +1,10 @@
+power = read.csv2("household_power_consumption.txt", header = TRUE, stringsAsFactors = FALSE)
+powersub = power[(power$Date == "1/2/2007" | power$Date == "2/2/2007"),]
+powersub$Date = as.Date(powersub$Date, format = "%d/%m/%Y")
+conc_DT = paste(powersub$Date,powersub$Time,sep=' ')
+DT = strptime(conc_DT,"%Y-%m-%d %H:%M:%S")
+par(mar = c(2,4,1,1))
+plot(DT,powersub$Sub_metering_1, type = "l", ylab = "Energy sub metering", main = NULL)
+lines(DT, powersub$Sub_metering_2, col = "red")
+lines(DT, powersub$Sub_metering_3, col = "blue")
+legend("topright", col=c('black','red','blue'), legend=c('Sub_metering_1', 'Sub_metering_2','Sub_metering_3'), lty=1, bty='n')
